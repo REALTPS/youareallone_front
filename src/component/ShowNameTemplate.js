@@ -1,7 +1,8 @@
 import React from 'react';
 import styled from 'styled-components';
-import { Link } from 'react-router-dom';
 import ShowNameForm from './ShowNameForm';
+import Submitter from './Submitter';
+import BrowserRouter from 'react-router-dom';
 
 const NameTemplateBlock = styled.div`
   align-items: center;

@@ -1,5 +1,7 @@
 import React, { Component, useState } from 'react';
 import styled from 'styled-components';
+import { Link } from 'react-router-dom';
+import Submitter from './Submitter';
 
 const WhiteBox = styled.div`
   .name-area {
@@ -57,9 +59,13 @@ class ShowNameForm extends Component {
   render() {
     return (
       <WhiteBox>
-        <div className="name-area" onClick={this.onClick}>
-          {IO[this.state.cnt]}
-        </div>
+        {this.state.isrun ? (
+          <div className="name-area" onClick={this.onClick}>
+            {IO[this.state.cnt]}
+          </div>
+        ) : (
+          <Submitter />
+        )}
       </WhiteBox>
     );
   }
