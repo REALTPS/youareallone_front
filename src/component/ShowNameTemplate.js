@@ -17,9 +17,16 @@ const NameTemplateBlock = styled.div`
   top: 0;
 `;
 
+const YOU_ARE_ALONE = styled.div`
+  font-size: 5rem;
+  font-weight: bold;
+  margin: 3rem;
+`;
+
 const ShowNameTemplate = () => {
   return (
     <NameTemplateBlock>
+      <YOU_ARE_ALONE>You are ALONE</YOU_ARE_ALONE>
       <ShowNameForm />
     </NameTemplateBlock>
   );

@@ -1,58 +1,68 @@
 import React, { useState } from 'react';
-
+import { Link } from 'react-router-dom';
 import styled from 'styled-components';
 
+const Input = styled.input`
+  font-size: 20px;
+  margin-bottom: 5px;
+  margin-left: 1px;
+  margin-right: 1px;
+  margin-top: 5px;
+`;
+
+const Btn = styled.button`
+  height: 4rem;
+  justify-content: center;
+  margin: 5px
+  width: 4rem;
+`;
+
 const Box = styled.div`
-  .name-area {
-    -khtml-user-select: none;
-    -moz-user-select: -moz-none;
-    -ms-user-select: none;
-    -webkit-user-select: none;
-    display: block;
-    flex-direction: column;
-    font-size: 10rem;
-    font-weight: bold;
-    justify-content: center;
-    letter-spacing: 2px;
-    padding-bottom: 1.5rem;
-
-    user-select: none;
-  }
-  align-items: center;
-  background: white;
-  border-radius: 4px;
-  box-shadow: 0 0 25px rgba(0, 0, 0, 1.125);
-  padding: 2rem;
-  width: 480px;
-`;
-
-const InBox = styled.div`
   display: inline-flex;
-  margin-left: 8rem;
+  height: 92px;
+  width: 390px;
+  .inner {
+    justify-content: center;
+    margin-bottom: 5px;
+    margin-left: 1px;
+    margin-right: 1px;
+    margin-top: 5px;
+  }
 `;
 
-const Submitter = () => {
+const onClick = (whois, customer, sercretno) => {
+  const commitjson = {
+    whois: { whois },
+    customer: { customer },
+    secretno: { sercretno },
+  };
+};
+
+const Submitter = arg => {
   const [customer, setCustomer] = useState('');
   const [sercretno, setSecretno] = useState('');
-
   return (
-    <>
-      <input
-        onChange={e => {
-          setCustomer(e.target.value);
-        }}
-        placeholder="Customer"
-        value={customer}
-      />
-
-      <input
-        onChange={e => {
-          setSecretno(e.target.value);
-        }}
-        placeholder="SecretNo"
-        value={sercretno}
-      />
-    </>
+    <Box>
+      <div className="inner">
+        <Input
+          onChange={e => {
+            setCustomer(e.target.value);
+          }}
+          placeholder="Customer"
+          value={customer}
+        />
+        <Input
+          onChange={e => {
+            setSecretno(e.target.value);
+          }}
+          placeholder="SecretNo"
+          value={sercretno}
+        />
+      </div>
+      <div className="inner">
+        <Btn onClick={onClick} />
+      </div>
+    </Box>
   );
 };
 
