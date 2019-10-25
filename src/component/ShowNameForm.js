@@ -59,9 +59,18 @@ class ShowNameForm extends Component {
         instance({
           method: 'post',
           url: '/posts/start',
-        }).then(response => {});
-        this.loop = setInterval(this.timer, 20);
-        this.setState({ isrun: !this.state.isrun });
+        })
+          .then(response => {
+            if (response.data === 'start') {
+              this.loop = setInterval(this.timer, 20);
+              this.setState({ isrun: !this.state.isrun });
+            }
+          })
+          .catch(err => {
+            this.setState({ status: 0 });
+            return;
+          });
+
         break;
       case 1:
         clearInterval(this.loop);
@@ -70,12 +79,24 @@ class ShowNameForm extends Component {
           url: '/posts/end',
         })
           .then(response => {
-            this.setState({ cnt: response.data % 4 });
+            if (response.data.confirm === 'end') {
+              this.setState({
+                isrun: !this.state.isrun,
+                cnt: response.data.cnt % 4,
+              });
+            } else {
+              console.log(response);
+              this.setState({ status: 0, who: 'Start' });
+            }
           })
           .then(response => {
             this.setState({ who: IO[this.state.cnt] });
+          })
+          .catch(err => {
+            this.setState({ status: 0 });
+            return;
           });
-        this.setState({ isrun: !this.state.isrun });
+
         break;
       case 2:
         this.setState({ who: 'Start' });
