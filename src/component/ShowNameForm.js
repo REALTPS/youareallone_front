@@ -2,6 +2,7 @@ import React, { Component } from 'react';
 import styled from 'styled-components';
 import { Route, Link } from 'react-router-dom';
 import Submitter from './Submitter';
+import axios from 'axios';
 
 const WhiteBox = styled.div`
   .name-area {
@@ -31,6 +32,11 @@ const WhiteBox = styled.div`
 const IO = ['HUGH', 'CARL', 'SAM', 'MARK'];
 const PATHS = ['/submit', '/'];
 
+const instance = axios.create({
+  baseURL: 'http://192.168.0.71:4500/api',
+  timeout: 1000,
+});
+
 const StyledLink = styled(Link)`
   color: black;
   text-decoration: none;
@@ -42,27 +48,52 @@ const StyledLink = styled(Link)`
     text-decoration: none;
   }
 `;
-
 class ShowNameForm extends Component {
-  state = { cnt: 0, isrun: true };
-  componentDidMount() {
-    this.loop = setInterval(this.timer, 10);
-  }
+  state = { status: 0, cnt: 0, isrun: false, who: 'Start' };
+  th = this;
+  componentDidMount() {}
   onClick = () => {
-    this.setState({ isrun: !this.state.isrun });
-    if (this.state.isrun === true) {
-      clearInterval(this.loop);
-    } else {
-      this.loop = setInterval(this.timer, 10);
+    this.setState({ status: (this.state.status + 1) % 3 });
+    switch (this.state.status) {
+      case 0:
+        instance({
+          method: 'post',
+          url: '/posts/start',
+        }).then(response => {});
+        this.loop = setInterval(this.timer, 20);
+        this.setState({ isrun: !this.state.isrun });
+        break;
+      case 1:
+        clearInterval(this.loop);
+        instance({
+          method: 'post',
+          url: '/posts/end',
+        })
+          .then(response => {
+            this.setState({ cnt: response.data % 4 });
+          })
+          .then(response => {
+            this.setState({ who: IO[this.state.cnt] });
+          });
+        this.setState({ isrun: !this.state.isrun });
+        break;
+      case 2:
+        this.setState({ who: 'Start' });
+        break;
+      default:
     }
   };
 
-  changer = () => {
-    this.setState({ isrun: !this.state.isrun });
-  };
-
   timer = () => {
-    this.setState({ cnt: (this.state.cnt + 1) % 4 });
+    const self = this;
+    axios({
+      method: 'get',
+      url: 'http://192.168.0.71:4500/api/posts',
+      responseType: 'text',
+    }).then(function(response) {
+      self.setState({ cnt: response.data % 4 });
+    });
+    this.setState({ who: IO[this.state.cnt] });
   };
 
   render() {
@@ -73,7 +104,7 @@ class ShowNameForm extends Component {
           className="name-area"
           onClick={this.onClick}
         >
-          {IO[this.state.cnt]}
+          {this.state.who}
         </StyledLink>
         <Route
           exact
