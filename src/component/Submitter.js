@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
-import { Link } from 'react-router-dom';
 import styled from 'styled-components';
+import { MdGavel } from 'react-icons/md';
 
 const Input = styled.input`
   font-size: 20px;
@@ -8,39 +8,36 @@ const Input = styled.input`
   margin-left: 1px;
   margin-right: 1px;
   margin-top: 5px;
+  padding: 1px;
+  width: 300px;
 `;
 
-const Btn = styled.button`
-  height: 4rem;
+const Btn = styled(MdGavel)`
+  background-color: white;
+  height: 69px;
   justify-content: center;
-  margin: 5px
-  width: 4rem;
+  margin: 4px;
+  margin-right: 10px;
+  padding: 0px;
+  width: 69px;
 `;
 
 const Box = styled.div`
   display: inline-flex;
   height: 92px;
-  width: 390px;
+  width: 420px;
   .inner {
     justify-content: center;
     margin-bottom: 5px;
-    margin-left: 1px;
+    margin-left: 10px;
     margin-right: 1px;
     margin-top: 5px;
   }
 `;
 
-const onClick = (whois, customer, sercretno) => {
-  const commitjson = {
-    whois: { whois },
-    customer: { customer },
-    secretno: { sercretno },
-  };
-};
-
-const Submitter = () => {
+const Submitter = props => {
   const [customer, setCustomer] = useState('');
-  const [sercretno, setSecretno] = useState('');
+  const [secretno, setSecretno] = useState('');
   return (
     <Box>
       <div className="inner">
@@ -56,11 +53,24 @@ const Submitter = () => {
             setSecretno(e.target.value);
           }}
           placeholder="SecretNo"
-          value={sercretno}
+          value={secretno}
         />
       </div>
       <div className="inner">
-        <Btn onClick={onClick} />
+        <Btn
+          onClick={() => {
+            const whois = props.whois;
+            if (customer === '' || secretno === '') return;
+            const commitjson = {
+              whois: { whois },
+              customer: { customer },
+              secretno: { secretno },
+            };
+            console.log(commitjson);
+            setCustomer('');
+            setSecretno('');
+          }}
+        />
       </div>
     </Box>
   );

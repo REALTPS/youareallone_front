@@ -1,4 +1,4 @@
-import React, { Component, useState } from 'react';
+import React, { Component } from 'react';
 import styled from 'styled-components';
 import { Route, Link } from 'react-router-dom';
 import Submitter from './Submitter';
@@ -31,8 +31,6 @@ const WhiteBox = styled.div`
 const IO = ['HUGH', 'CARL', 'SAM', 'MARK'];
 const PATHS = ['/submit', '/'];
 
-let i = 0;
-
 const StyledLink = styled(Link)`
   color: black;
   text-decoration: none;
@@ -52,7 +50,7 @@ class ShowNameForm extends Component {
   }
   onClick = () => {
     this.setState({ isrun: !this.state.isrun });
-    if (this.state.isrun == true) {
+    if (this.state.isrun === true) {
       clearInterval(this.loop);
     } else {
       this.loop = setInterval(this.timer, 10);
@@ -77,7 +75,13 @@ class ShowNameForm extends Component {
         >
           {IO[this.state.cnt]}
         </StyledLink>
-        <Route exact path="/submit" component={Submitter} />
+        <Route
+          exact
+          path="/submit"
+          component={props => (
+            <Submitter {...props} whois={IO[this.state.cnt]} />
+          )}
+        />
       </WhiteBox>
     );
   }

@@ -1,8 +1,6 @@
 import React from 'react';
 import styled from 'styled-components';
 import ShowNameForm from './ShowNameForm';
-import Submitter from './Submitter';
-import BrowserRouter from 'react-router-dom';
 
 const NameTemplateBlock = styled.div`
   align-items: center;
@@ -17,7 +15,7 @@ const NameTemplateBlock = styled.div`
   top: 0;
 `;
 
-const YOU_ARE_ALONE = styled.div`
+const YOUAREALONE = styled.div`
   font-size: 5rem;
   font-weight: bold;
   margin: 3rem;
@@ -26,7 +24,7 @@ const YOU_ARE_ALONE = styled.div`
 const ShowNameTemplate = () => {
   return (
     <NameTemplateBlock>
-      <YOU_ARE_ALONE>You are ALONE</YOU_ARE_ALONE>
+      <YOUAREALONE>You are ALONE</YOUAREALONE>
       <ShowNameForm />
     </NameTemplateBlock>
   );
