@@ -29,7 +29,7 @@ const WhiteBox = styled.div`
 `;
 
 const IO = ['HUGH', 'CARL', 'SAM', 'MARK'];
-const PATHS = ['/', '/submit'];
+const PATHS = ['/submit', '/'];
 
 let i = 0;
 
@@ -51,12 +51,12 @@ class ShowNameForm extends Component {
     this.loop = setInterval(this.timer, 10);
   }
   onClick = () => {
+    this.setState({ isrun: !this.state.isrun });
     if (this.state.isrun == true) {
       clearInterval(this.loop);
     } else {
       this.loop = setInterval(this.timer, 10);
     }
-    this.setState({ isrun: !this.state.isrun });
   };
 
   changer = () => {
@@ -77,12 +77,7 @@ class ShowNameForm extends Component {
         >
           {IO[this.state.cnt]}
         </StyledLink>
-        <Route
-          exact
-          path="/submit"
-          component={Submitter}
-          whois={IO[this.state.cnt]}
-        />
+        <Route exact path="/submit" component={Submitter} />
       </WhiteBox>
     );
   }

@@ -38,7 +38,7 @@ const onClick = (whois, customer, sercretno) => {
   };
 };
 
-const Submitter = arg => {
+const Submitter = () => {
   const [customer, setCustomer] = useState('');
   const [sercretno, setSecretno] = useState('');
   return (
