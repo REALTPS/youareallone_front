@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
 import styled from 'styled-components';
 import { MdGavel } from 'react-icons/md';
+import axios from 'axios';
 
 const Input = styled.input`
   font-size: 20px;
@@ -61,12 +62,16 @@ const Submitter = props => {
           onClick={() => {
             const whois = props.whois;
             if (customer === '' || secretno === '') return;
-            const commitjson = {
-              whois: { whois },
-              customer: { customer },
-              secretno: { secretno },
-            };
-            console.log(commitjson);
+            let form = new FormData();
+            form.append('whois', whois);
+            form.append('customer', customer);
+            form.append('secretno', secretno);
+            axios.post('http://192.168.0.71:4500/api/posts/setdata', {
+              whois: whois,
+              customer: customer,
+              secretno: secretno,
+            });
+
             setCustomer('');
             setSecretno('');
           }}
