@@ -50,7 +50,7 @@ class ShowNameForm extends Component {
   state = { status: 0, cnt: 0, isrun: false, who: 'Start' };
   th = this;
   componentDidMount() {
-    this.setState({ who: 'Load' });
+    this.setState({ who: '' });
     this.loop = setInterval(this.timer, 40);
   }
   onClick = () => {
