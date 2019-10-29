@@ -54,33 +54,45 @@ class ShowNameForm extends Component {
   th = this;
 
   componentDidMount() {
-    socket.emit();
-    this.getcandidate();
+    this.i = 0;
     this.setState({ who: '' });
     // this.loop = setInterval(this.timer, 100);
     this.timer();
     socket.on('status', data => {
-      console.log(`Now Status : ${data.status}`);
+      console.log(`Now Status11 : ${data.name}`);
       this.setState({ status: data.status });
-      if (this.state.status === 1) {
-        this.setState({ who: data.name });
-      }
-      this.phaseshift();
+
+      this.phaseshift(data);
     });
+    instance({
+      method: 'get',
+      url: '/posts/status',
+    })
+      .then(response => {
+        if (response.data.confirm === 'data') {
+          this.setState({
+            status: response.data.status,
+            who: response.data.name,
+          });
+          console.log(`Now Status : ${this.state.status}`);
+          this.phaseshift();
+        }
+      })
+      .catch(err => {
+        this.setState({ status: 0 });
+        return;
+      });
   }
   onClick = () => {
     switch (this.state.status) {
       case 0:
-        this.getcandidate();
         instance({
           method: 'post',
           url: '/posts/start',
         })
           .then(response => {
             if (response.data.confirm === 'start') {
-              this.setState({
-                isrun: !this.state.isrun,
-              });
+              console.log(`Now Status : ${this.state.status}`);
             }
           })
           .catch(err => {
@@ -97,12 +109,6 @@ class ShowNameForm extends Component {
             console.log(response.data);
             if (response.data.confirm === 'end') {
               console.log('isrun??');
-              this.setState({
-                isrun: !this.state.isrun,
-                id: response.data.id,
-                status: response.data.status,
-                who: response.data.name,
-              });
             } else {
               this.setState({ status: 0, who: 'Start' });
               console.log('모냐이건' + response);
@@ -125,16 +131,26 @@ class ShowNameForm extends Component {
     this.phaseshift();
   };
 
-  phaseshift = () => {
+  phaseshift = data => {
     switch (this.state.status) {
       case 0:
         this.setState({ who: 'Start' });
         break;
       case 1:
-        this.setState({ who: this.IO[this.state.cnt], isrun: true });
+        this.getcandidate();
+        this.setState({ isrun: true });
+        this.loop = setInterval(this.timer, 10);
         break;
       case 2:
-        this.setState({ who: this.IO[this.state.cnt], isrun: false });
+        console.log('data stopped??? ' + data);
+        clearInterval(this.loop);
+        this.setState({
+          isrun: false,
+          id: data.id,
+          status: data.status,
+          who: data.name,
+        });
+
         break;
 
       default:
@@ -158,8 +174,10 @@ class ShowNameForm extends Component {
       url: '/posts/candidate',
     })
       .then(response => {
+        console.log(response.data.candidate);
         if (response.data.confirm === 'getcandidate') {
           c = response.data.candidate;
+          console.log(c);
           if (!this.comparison(c)) {
             this.IO = c;
           }
@@ -168,26 +186,15 @@ class ShowNameForm extends Component {
       })
       .catch(err => {
         this.IO = [];
+        console.log('???');
         return;
       });
   };
 
   timer = () => {
-    this.getcandidate();
-    instance({
-      method: 'get',
-      url: '/posts/status',
-    })
-      .then(response => {
-        if (response.data.confirm === 'data') {
-          this.setState({
-            cnt: response.data.cnt % this.IO.length,
-            status: response.data.status,
-          });
-          this.phaseshift();
-        }
-      })
-      .catch(err => {});
+    this.setState({ who: this.IO[this.i] });
+    this.i += 1;
+    this.i %= this.IO.length;
   };
 
   render() {
