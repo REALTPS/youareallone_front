@@ -1,6 +1,5 @@
 import React from 'react';
 import styled from 'styled-components';
-import { Link } from 'react-router-dom';
 import ShowNameForm from './ShowNameForm';
 
 const NameTemplateBlock = styled.div`
@@ -16,9 +15,16 @@ const NameTemplateBlock = styled.div`
   top: 0;
 `;
 
+const YOUAREALONE = styled.div`
+  font-size: 5rem;
+  font-weight: bold;
+  margin: 3rem;
+`;
+
 const ShowNameTemplate = () => {
   return (
     <NameTemplateBlock>
+      <YOUAREALONE>You are ALONE</YOUAREALONE>
       <ShowNameForm />
     </NameTemplateBlock>
   );
