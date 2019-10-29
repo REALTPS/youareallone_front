@@ -59,7 +59,6 @@ class ShowNameForm extends Component {
     // this.loop = setInterval(this.timer, 100);
     this.timer();
     socket.on('status', data => {
-      console.log(`Now Status11 : ${data.name}`);
       this.setState({ status: data.status });
 
       this.phaseshift(data);
@@ -74,8 +73,8 @@ class ShowNameForm extends Component {
             status: response.data.status,
             who: response.data.name,
           });
-          console.log(`Now Status : ${this.state.status}`);
-          this.phaseshift();
+
+          this.phaseshift(response.data);
         }
       })
       .catch(err => {
@@ -92,7 +91,8 @@ class ShowNameForm extends Component {
         })
           .then(response => {
             if (response.data.confirm === 'start') {
-              console.log(`Now Status : ${this.state.status}`);
+            } else {
+              this.setState({ status: 0, who: 'Start' });
             }
           })
           .catch(err => {
@@ -106,20 +106,16 @@ class ShowNameForm extends Component {
           url: '/posts/end',
         })
           .then(response => {
-            console.log(response.data);
             if (response.data.confirm === 'end') {
-              console.log('isrun??');
             } else {
               this.setState({ status: 0, who: 'Start' });
-              console.log('모냐이건' + response);
             }
           })
           .catch(err => {
-            console.log('isrun??');
             this.setState({ status: 0 });
             return;
           });
-        console.log('isrun??');
+
         break;
       default:
         break;
@@ -128,6 +124,7 @@ class ShowNameForm extends Component {
 
   setstatus = status => {
     this.setState({ status: status });
+
     this.phaseshift();
   };
 
@@ -142,7 +139,6 @@ class ShowNameForm extends Component {
         this.loop = setInterval(this.timer, 10);
         break;
       case 2:
-        console.log('data stopped??? ' + data);
         clearInterval(this.loop);
         this.setState({
           isrun: false,
@@ -174,19 +170,17 @@ class ShowNameForm extends Component {
       url: '/posts/candidate',
     })
       .then(response => {
-        console.log(response.data.candidate);
         if (response.data.confirm === 'getcandidate') {
           c = response.data.candidate;
-          console.log(c);
+
           if (!this.comparison(c)) {
             this.IO = c;
           }
-          console.log(this.IO);
         }
       })
       .catch(err => {
         this.IO = [];
-        console.log('???');
+
         return;
       });
   };
@@ -207,7 +201,7 @@ class ShowNameForm extends Component {
           <Submitter
             {...this.state}
             setstatus={this.setstatus}
-            whois={this.IO[this.state.cnt]}
+            whois={this.state.who}
           />
         )}
       </WhiteBox>
