@@ -2,6 +2,10 @@ import React, { Component } from 'react';
 import styled from 'styled-components';
 import Submitter from './Submitter';
 import axios from 'axios';
+import io from 'socket.io-client';
+
+const ioserver = 'http://192.168.0.71:4600';
+const socket = io(ioserver);
 
 const WhiteBox = styled.div`
   .name-area {
@@ -28,8 +32,6 @@ const WhiteBox = styled.div`
   width: 480px;
 `;
 
-const IO = ['HUGH', 'CARL', 'SAM', 'MARK'];
-
 const instance = axios.create({
   baseURL: 'http://192.168.0.71:4500/api',
   timeout: 1000,
@@ -47,15 +49,29 @@ const StyledLink = styled.div`
   }
 `;
 class ShowNameForm extends Component {
+  IO = ['Mark', 'Sam', 'Hugh', 'Carl'];
   state = { status: 0, cnt: 0, isrun: false, who: 'Start' };
   th = this;
+
   componentDidMount() {
+    socket.emit();
+    this.getcandidate();
     this.setState({ who: '' });
-    this.loop = setInterval(this.timer, 40);
+    // this.loop = setInterval(this.timer, 100);
+    this.timer();
+    socket.on('status', data => {
+      console.log(`Now Status : ${data.status}`);
+      this.setState({ status: data.status });
+      if (this.state.status === 1) {
+        this.setState({ who: data.name });
+      }
+      this.phaseshift();
+    });
   }
   onClick = () => {
     switch (this.state.status) {
       case 0:
+        this.getcandidate();
         instance({
           method: 'post',
           url: '/posts/start',
@@ -78,20 +94,26 @@ class ShowNameForm extends Component {
           url: '/posts/end',
         })
           .then(response => {
+            console.log(response.data);
             if (response.data.confirm === 'end') {
+              console.log('isrun??');
               this.setState({
                 isrun: !this.state.isrun,
-                cnt: response.data.cnt % 4,
+                id: response.data.id,
                 status: response.data.status,
+                who: response.data.name,
               });
             } else {
               this.setState({ status: 0, who: 'Start' });
+              console.log('모냐이건' + response);
             }
           })
           .catch(err => {
+            console.log('isrun??');
             this.setState({ status: 0 });
             return;
           });
+        console.log('isrun??');
         break;
       default:
         break;
@@ -109,16 +131,49 @@ class ShowNameForm extends Component {
         this.setState({ who: 'Start' });
         break;
       case 1:
-        this.setState({ who: IO[this.state.cnt], isrun: true });
+        this.setState({ who: this.IO[this.state.cnt], isrun: true });
         break;
       case 2:
-        this.setState({ who: IO[this.state.cnt], isrun: false });
+        this.setState({ who: this.IO[this.state.cnt], isrun: false });
         break;
 
       default:
     }
   };
+
+  comparison = c => {
+    if (this.IO.length !== c.length) return false;
+
+    for (let i = 0; i < this.IO.length; i++) {
+      if (c[i] !== this.IO[i]) return false;
+    }
+
+    return true;
+  };
+
+  getcandidate = () => {
+    let c;
+    instance({
+      method: 'get',
+      url: '/posts/candidate',
+    })
+      .then(response => {
+        if (response.data.confirm === 'getcandidate') {
+          c = response.data.candidate;
+          if (!this.comparison(c)) {
+            this.IO = c;
+          }
+          console.log(this.IO);
+        }
+      })
+      .catch(err => {
+        this.IO = [];
+        return;
+      });
+  };
+
   timer = () => {
+    this.getcandidate();
     instance({
       method: 'get',
       url: '/posts/status',
@@ -126,7 +181,7 @@ class ShowNameForm extends Component {
       .then(response => {
         if (response.data.confirm === 'data') {
           this.setState({
-            cnt: response.data.cnt % 4,
+            cnt: response.data.cnt % this.IO.length,
             status: response.data.status,
           });
           this.phaseshift();
@@ -145,7 +200,7 @@ class ShowNameForm extends Component {
           <Submitter
             {...this.state}
             setstatus={this.setstatus}
-            whois={IO[this.state.cnt]}
+            whois={this.IO[this.state.cnt]}
           />
         )}
       </WhiteBox>
