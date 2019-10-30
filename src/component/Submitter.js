@@ -15,65 +15,72 @@ const Input = styled.input`
 
 const Btn = styled(MdGavel)`
   background-color: white;
-  height: 69px;
+  height: 110px;
   justify-content: center;
   margin: 4px;
   margin-right: 10px;
   padding: 0px;
-  width: 69px;
+  width: 110px;
 `;
 
 const Box = styled.div`
   display: inline-flex;
-  height: 92px;
+  height: 132px;
   width: 420px;
   .inner {
     justify-content: center;
     margin-bottom: 5px;
-    margin-left: 10px;
-    margin-right: 1px;
+    margin-left: 5px;
+    margin-right: 10px;
     margin-top: 5px;
   }
 `;
 
 const Submitter = props => {
-  const [customer, setCustomer] = useState('');
-  const [secretno, setSecretno] = useState('');
+  const [company, setCompany] = useState('');
+  const [serial, setSerial] = useState('');
+  const [requester, setRequester] = useState('');
   return (
     <Box>
       <div className="inner">
         <Input
           onChange={e => {
-            setCustomer(e.target.value);
+            setCompany(e.target.value);
           }}
-          placeholder="Customer"
-          value={customer}
+          placeholder="Company"
+          value={company}
         />
         <Input
           onChange={e => {
-            setSecretno(e.target.value);
+            setSerial(e.target.value);
           }}
-          placeholder="SecretNo"
-          value={secretno}
+          placeholder="Serial"
+          value={serial}
+        />
+        <Input
+          onChange={e => {
+            setRequester(e.target.value);
+          }}
+          placeholder="Requester"
+          value={requester}
         />
       </div>
       <div className="inner">
         <Btn
           onClick={() => {
-            const whois = props.whois;
-            if (customer === '' || secretno === '') return;
-            let form = new FormData();
-            form.append('whois', whois);
-            form.append('customer', customer);
-            form.append('secretno', secretno);
+            const name = props.whois;
+            if (company === '' || serial === '' || requester === '') return;
+
             axios.post('http://192.168.0.71:4500/api/posts/setdata', {
-              whois: whois,
-              customer: customer,
-              secretno: secretno,
+              name: name,
+              customer: company,
+              serial: serial,
+              requester: requester,
             });
 
-            setCustomer('');
-            setSecretno('');
+            setCompany('');
+            setSerial('');
+            setRequester('');
           }}
         />
       </div>
