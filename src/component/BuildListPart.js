@@ -29,7 +29,7 @@ const BuildListPart = ({ lists, onToggle }) => {
     <Lists>
       <List
         className="List"
-        width={450}
+        width={315}
         height={700}
         rowCount={lists.length}
         rowHeight={100}
@@ -38,7 +38,7 @@ const BuildListPart = ({ lists, onToggle }) => {
         style={{
           justifyItems: 'center',
           outline: 'none',
-          width: '420px',
+          width: '325px',
           background: '#f1f3f5',
         }}
       />

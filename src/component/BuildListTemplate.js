@@ -3,7 +3,7 @@ import styled from 'styled-components';
 const Lists = styled.div`
   background: #f1f3f5;
 
-  border-right: 1px solid;
+  border-right: 2px solid #dddddd;
   justify-content: left;
   margin-left: 0.5rem;
   margin-right: 0.6rem;

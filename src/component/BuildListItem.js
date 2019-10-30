@@ -6,6 +6,7 @@ const StyledItem = styled.div`
   -moz-user-select: -moz-none;
   -ms-user-select: none;
   -webkit-user-select: none;
+
   background: #e3e3f3;
   border-radius: 0.5rem;
   color: black;
@@ -27,11 +28,11 @@ const StyledItem = styled.div`
     }
   }
   .description {
-    justify-content: space-between;
+    justify-content: left;
     .text {
       display: flex;
       font-size: 20px;
-      margin-left: 27px;
+      margin-left: 7px;
     }
   }
 

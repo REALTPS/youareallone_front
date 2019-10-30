@@ -10,7 +10,6 @@ const NameTemplateBlock = styled.div`
   display: flex;
   flex-direction: column;
   justify-content: center;
-  margin: 5rem;
 `;
 
 const YOUAREALONE = styled.div`
@@ -20,7 +19,7 @@ const YOUAREALONE = styled.div`
   -webkit-user-select: none;
   font-size: 5rem;
   font-weight: bold;
-  margin: 3rem;
+  margin: 1.5rem;
 `;
 
 const ShowNameTemplate = () => {
