@@ -36,7 +36,7 @@ const instance = axios.create({
 });
 
 class ShowNamePage extends React.Component {
-  state = { history: [] };
+  state = { history: [], keyword: '' };
   componentDidMount() {
     this.gethistory();
     socket.on('history', data => {
@@ -55,12 +55,29 @@ class ShowNamePage extends React.Component {
       }
     });
   }
+  onChange = e => {
+    this.setState({ keyword: e.target.value });
+  };
   render() {
     return (
       <PageDiv>
         <Div2>
-          <BuildListTemplate>
-            <BuildListPart lists={this.state.history} />
+          <BuildListTemplate
+            keyword={this.state.keyword}
+            onChange={this.onChange}
+          >
+            <BuildListPart
+              lists={this.state.history.filter(e => {
+                return (
+                  e.name
+                    .toLowerCase()
+                    .indexOf(this.state.keyword.toLowerCase()) > -1 ||
+                  e.company
+                    .toLowerCase()
+                    .indexOf(this.state.keyword.toLowerCase()) > -1
+                );
+              })}
+            />
           </BuildListTemplate>
         </Div2>
 
