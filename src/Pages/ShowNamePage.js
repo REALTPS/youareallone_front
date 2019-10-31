@@ -13,6 +13,7 @@ const PageDiv = styled.div`
   align-content: center;
   background: #f1f3f5;
   display: flex;
+  height: 810px;
   width: 100%;
 `;
 
@@ -34,6 +35,18 @@ const instance = axios.create({
   baseURL: 'http://192.168.0.71:4500/api',
   timeout: 1000,
 });
+
+const YOUAREALONE = styled.div`
+  -khtml-user-select: none;
+  -moz-user-select: -moz-none;
+  -ms-user-select: none;
+  -webkit-user-select: none;
+  border-bottom: 4px solid #dddddd;
+  font-size: 6.2rem;
+  font-weight: bold;
+  margin-bottom: 0.5rem;
+  padding-bottom: 3rem;
+`;
 
 class ShowNamePage extends React.Component {
   state = { history: [], keyword: '' };
@@ -60,31 +73,34 @@ class ShowNamePage extends React.Component {
   };
   render() {
     return (
-      <PageDiv>
-        <Div2>
-          <BuildListTemplate
-            keyword={this.state.keyword}
-            onChange={this.onChange}
-          >
-            <BuildListPart
-              lists={this.state.history.filter(e => {
-                return (
-                  e.name
-                    .toLowerCase()
-                    .indexOf(this.state.keyword.toLowerCase()) > -1 ||
-                  e.company
-                    .toLowerCase()
-                    .indexOf(this.state.keyword.toLowerCase()) > -1
-                );
-              })}
-            />
-          </BuildListTemplate>
-        </Div2>
+      <>
+        <YOUAREALONE>You are alone?</YOUAREALONE>
+        <PageDiv>
+          <Div2>
+            <BuildListTemplate
+              keyword={this.state.keyword}
+              onChange={this.onChange}
+            >
+              <BuildListPart
+                lists={this.state.history.filter(e => {
+                  return (
+                    e.name
+                      .toLowerCase()
+                      .indexOf(this.state.keyword.toLowerCase()) > -1 ||
+                    e.company
+                      .toLowerCase()
+                      .indexOf(this.state.keyword.toLowerCase()) > -1
+                  );
+                })}
+              />
+            </BuildListTemplate>
+          </Div2>
 
-        <Div>
-          <ShowNameTemplate />
-        </Div>
-      </PageDiv>
+          <Div>
+            <ShowNameTemplate />
+          </Div>
+        </PageDiv>
+      </>
     );
   }
 }
