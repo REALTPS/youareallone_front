@@ -3,6 +3,7 @@ FROM node:10 as builder
 RUN mkdir /usr/src/app
 WORKDIR /usr/src/app
 COPY . /usr/src/app
+RUN yarn install
 RUN yarn build
 
 
