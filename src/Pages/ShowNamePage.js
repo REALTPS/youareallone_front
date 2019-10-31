@@ -13,7 +13,7 @@ const PageDiv = styled.div`
   align-content: center;
   background: #f1f3f5;
   display: flex;
-  height: 810px;
+  height: 750px;
   width: 100%;
 `;
 
@@ -42,7 +42,7 @@ const YOUAREALONE = styled.div`
   -ms-user-select: none;
   -webkit-user-select: none;
   border-bottom: 4px solid #dddddd;
-  font-size: 6.2rem;
+  font-size: 4.2rem;
   font-weight: bold;
   margin-bottom: 0.5rem;
   padding-bottom: 3rem;

@@ -30,9 +30,9 @@ const BuildListPart = ({ lists, onToggle }) => {
       <List
         className="List"
         width={315}
-        height={700}
+        height={650}
         rowCount={lists.length}
-        rowHeight={100}
+        rowHeight={120}
         rowRenderer={rowRenderer}
         list={lists}
         style={{

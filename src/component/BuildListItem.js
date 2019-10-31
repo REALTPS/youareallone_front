@@ -7,14 +7,16 @@ const StyledItem = styled.div`
   -ms-user-select: none;
   -webkit-user-select: none;
 
-  background: #e3e3f3;
+  background: #99cc99;
   border-radius: 0.5rem;
   color: black;
   display: flex;
   font-size: 1rem;
+  height: 97px;
   justify-items: center;
-  margin: 0.5rem;
+  margin: 0.1rem;
   padding: 1rem;
+  padding-top: 0.1rem;
   width: 260px;
   .namepart {
     display: flex;
@@ -23,16 +25,28 @@ const StyledItem = styled.div`
     .who {
       display: flex;
       font-size: 2.5rem;
+      justify-content: center;
       margin-bottom: 0.5rem;
       margin-left: 5px;
+      font-weight: bold;
     }
   }
   .description {
     justify-content: left;
+    width: 100px;
     .text {
+      white-space: nowrap;
       display: flex;
-      font-size: 20px;
-      margin-left: 7px;
+      font-size: 18px;
+      overflow: hidden;
+      margin-bottom: 8px;
+    }
+    .company {
+      white-space: nowrap;
+      display: flex;
+      font-size: 25px;
+      overflow: hidden;
+      margin-bottom: 8px;
     }
   }
 
@@ -49,8 +63,8 @@ const BuildListItem = ({ history, onToggle, style }) => {
           <div className="who">{name}</div>
         </div>
         <div className="description">
-          <div className="text">{company}</div>
-          <div className="text">{serial}</div>
+          <div className="company">{serial}</div>
+          <div className="company">{company}</div>
           <div className="text">{requester}</div>
         </div>
       </StyledItem>
