@@ -74,7 +74,7 @@ class ShowNamePage extends React.Component {
   render() {
     return (
       <>
-        <YOUAREALONE>You are alone.</YOUAREALONE>
+        <YOUAREALONE>You are alone?</YOUAREALONE>
         <PageDiv>
           <Div2>
             <BuildListTemplate
