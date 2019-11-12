@@ -21,7 +21,7 @@ const StyledItem = styled.div`
   .namepart {
     display: flex;
     justify-content: space-between;
-    width: 150px;
+    width: 140px;
     .who {
       display: flex;
       font-size: 2.5rem;
@@ -37,16 +37,17 @@ const StyledItem = styled.div`
     .text {
       white-space: nowrap;
       display: flex;
-      font-size: 18px;
-      overflow: hidden;
+      font-size: 28px;
+
       margin-bottom: 8px;
     }
     .company {
       white-space: nowrap;
       display: flex;
-      font-size: 25px;
-      overflow: hidden;
+      font-size: 20px;
+
       margin-bottom: 8px;
+      word-break: break-all;
     }
   }
 
@@ -63,7 +64,7 @@ const BuildListItem = ({ history, onToggle, style }) => {
           <div className="who">{name}</div>
         </div>
         <div className="description">
-          <div className="company">{serial}</div>
+          <div className="text">{serial}</div>
           <div className="company">{company}</div>
           <div className="text">{requester}</div>
         </div>
