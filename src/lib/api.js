@@ -1,7 +1,7 @@
 import axios from 'axios';
 
 export const instance = axios.create({
-  baseURL: 'http://192.168.0.71:4500/api',
+  baseURL: 'http://192.168.0.76:4500/api',
   timeout: 1000,
 });
 
@@ -23,4 +23,15 @@ export const getcandidate = () => {
       this.IO = [];
       return;
     });
+};
+
+export const gethistory = () => {
+  instance({
+    method: 'get',
+    url: '/gets/history',
+  }).then(response => {
+    if (response.data.confirm === 'OK') {
+      this.setState({ history: response.data.history });
+    }
+  });
 };

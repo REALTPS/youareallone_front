@@ -4,7 +4,7 @@ import Submitter from './Submitter';
 import axios from 'axios';
 import io from 'socket.io-client';
 
-const ioserver = 'http://192.168.0.71:4600';
+const ioserver = 'http://192.168.0.76:4600';
 const socket = io(ioserver);
 
 const WhiteBox = styled.div`
@@ -33,7 +33,7 @@ const WhiteBox = styled.div`
 `;
 
 const instance = axios.create({
-  baseURL: 'http://192.168.0.71:4500/api',
+  baseURL: 'http://192.168.0.76:4500/api',
   timeout: 1000,
 });
 

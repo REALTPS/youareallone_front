@@ -71,7 +71,7 @@ const Submitter = props => {
             const name = props.whois;
             if (company === '' || serial === '' || requester === '') return;
 
-            axios.post('http://192.168.0.71:4500/api/posts/setdata', {
+            axios.post('http://192.168.0.76:4500/api/posts/setdata', {
               name: name,
               customer: company,
               serial: serial,
