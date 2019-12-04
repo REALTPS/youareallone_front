@@ -17,11 +17,11 @@ const StyledItem = styled.div`
   margin: 0.1rem;
   padding: 1rem;
   padding-top: 0.1rem;
-  width: 260px;
+
   .namepart {
     display: flex;
     justify-content: space-between;
-    width: 140px;
+    width: 150px;
     .who {
       display: flex;
       font-size: 2.5rem;
@@ -32,8 +32,7 @@ const StyledItem = styled.div`
     }
   }
   .description {
-    justify-content: left;
-    width: 100px;
+    width: 150px;
     .text {
       white-space: nowrap;
       display: flex;
@@ -42,10 +41,10 @@ const StyledItem = styled.div`
       margin-bottom: 8px;
     }
     .company {
-      white-space: nowrap;
+      font-size: 17px;
+      margin-right: auto;
       display: flex;
-      font-size: 20px;
-
+      text-align: left;
       margin-bottom: 8px;
       word-break: break-all;
     }

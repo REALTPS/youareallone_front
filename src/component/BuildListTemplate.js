@@ -30,7 +30,7 @@ const Input = styled.input`
   font-size: 25px;
   margin: 10px;
   margin-left: 25px;
-  width: 286px;
+  width: 300px;
 `;
 
 const BuildListTemplate = ({ keyword, onChange, children }) => {
